@@ -46,7 +46,7 @@ const setCard = async (req) => {
 const deleteCard = async (req) => {
     try {
         const id = req.params.id;
-        const deleteCard = await Kanban.findById(id).exec();
+        const deleteCard = await Kanban.findByIdAndDelete(id).exec();
         return deleteCard;
     } catch (err) {
         console.error(err);
