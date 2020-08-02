@@ -19,6 +19,15 @@ const getCard = async (req) => {
     }
 };
 
+const createCard = async (req) => {
+    try {
+        const createCard = await Kanban.create(req.body);
+        return createCard;
+    } catch (err) {
+        console.error(err);
+    }
+};
+
 const setCard = async (req) => {
     try {
         const id = req.params.id;
@@ -34,10 +43,11 @@ const setCard = async (req) => {
     }
 };
 
-const createCard = async (req) => {
+const deleteCard = async (req) => {
     try {
-        const createCard = await Kanban.create(req.body);
-        return createCard;
+        const id = req.params.id;
+        const deleteCard = await Kanban.findById(id).exec();
+        return deleteCard;
     } catch (err) {
         console.error(err);
     }
@@ -46,6 +56,7 @@ const createCard = async (req) => {
 module.exports = {
     getKanban,
     getCard,
+    createCard,
     setCard,
-    createCard
+    deleteCard
 };

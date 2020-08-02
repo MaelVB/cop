@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Module = new Schema({
-    name: { type: String },
-    infos: [String],
-    configurations: [String]
+const Modules = new Schema({
+    description: { type: String },
+    author: { type: String },
+    priority: { type: String },
+    completed: { type: Boolean, default: false }
 });
 
-module.exports = mongoose.model('Module', Module, 'modules');
+module.exports = mongoose.model('Modules', Modules, 'modules');

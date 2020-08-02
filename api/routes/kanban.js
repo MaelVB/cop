@@ -1,8 +1,15 @@
+/**
+ * /kanban
+ */
+
 const express = require('express');
 
 const kanbanRouter = express.Router();
 const kanbanController = require('../controllers/kanban');
 
+/**
+ * Get all cards
+ */
 kanbanRouter.route('/').get(async (req, res) => {
     try {
         res.json(await kanbanController.getKanban());
@@ -11,6 +18,9 @@ kanbanRouter.route('/').get(async (req, res) => {
     }
 });
 
+/**
+ * Get a card
+ */
 kanbanRouter.route('/:id').get(async (req, res) => {
     try {
         res.json(await kanbanController.getCard(req));
@@ -19,7 +29,21 @@ kanbanRouter.route('/:id').get(async (req, res) => {
     }
 });
 
-kanbanRouter.route('/update/:id').post(async (req, res) => {
+/**
+ * Create a card
+ */
+kanbanRouter.route('/').post(async (req, res) => {
+    try {
+        res.json(await kanbanController.createCard(req));
+    } catch (err) {
+        next(err);
+    }
+});
+
+/**
+ * Update a card
+ */
+kanbanRouter.route('/:id').put(async (req, res) => {
     try {
         res.json(await kanbanController.setCard(req));
     } catch (err) {
@@ -27,9 +51,12 @@ kanbanRouter.route('/update/:id').post(async (req, res) => {
     }
 });
 
-kanbanRouter.route('/add').post(async (req, res) => {
+/**
+ * Remove a card
+ */
+kanbanRouter.route('/:id').delete(async (req, res) => {
     try {
-        res.json(await kanbanController.createCard(req));
+        res.json(await kanbanController.deleteCard(req));
     } catch (err) {
         next(err);
     }
