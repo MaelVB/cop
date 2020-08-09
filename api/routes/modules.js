@@ -1,54 +1,65 @@
+/**
+ * /modules
+ */
+
 const express = require('express');
 
 const modulesRouter = express.Router();
-let Modules = require('../schemas/modules.model');
+const modulesController = require('../controllers/modules');
 
-modulesRouter.route('/').get(function(req, res) {
-    Modules.find(function(err, modules) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(modules);
-        }
-    });
+/**
+ * Get all modules statics infos
+ */
+modulesRouter.route('/').get(async (req, res) => {
+    try {
+        res.json(await modulesController.getModules());
+    } catch (err) {
+        next (err);
+    }
 });
 
-modulesRouter.route('/:id').get(function(req, res) {
-    let id = req.params.id;
-    Modules.findById(id, function(err, modules) {
-        res.json(modules);
-    });
+/**
+ * Get a module static info
+ */
+modulesRouter.route('/:id').get(async (req, res) => {
+    try {
+        res.json(await modulesController.getModule(req));
+    } catch (err) {
+        next(err);
+    }
 });
 
-modulesRouter.route('/update/:id').post(function(req, res) {
-    Modules.findById(req.params.id, function(err, modules) {
-        if (!modules)
-            res.status(404).send("data is not found");
-        else
-            modules.todo_description = req.body.todo_description;
-            modules.todo_responsible = req.body.todo_responsible;
-            modules.todo_priority = req.body.todo_priority;
-            modules.todo_column = req.body.todo_column;
-            modules.todo_completed = req.body.todo_completed;
-            modules.save().then(modules => {
-                res.json('Modules updated!');
-            })
-            .catch(err => {
-                res.status(400).send("Update not possible");
-            });
-    });
+/**
+ * Create a card
+ */
+modulesRouter.route('/').post(async (req, res) => {
+    try {
+        res.json(await modulesController.createModule(req));
+    } catch (err) {
+        next(err);
+    }
 });
 
-modulesRouter.route('/add').post(function(req, res) {
-    let modules = new Modules(req.body);
-    console.log(modules)
-    modules.save()
-        .then(modules => {
-            res.status(200).json({'modules': 'modules added successfully'});
-        })
-        .catch(err => {
-            res.status(400).send('adding new modules failed');
-        });
+/**
+ * Update a card
+ */
+modulesRouter.route('/:id').put(async (req, res) => {
+    try {
+        res.json(await modulesController.setModule(req));
+    } catch (err) {
+        next(err);
+    }
+});
+
+/**
+ * Remove a card
+ */
+modulesRouter.route('/:id').delete(async (req, res) => {
+    try {
+        res.json(await modulesController.deleteModule(req));
+    } catch (err) {
+        next(err);
+    }
 });
 
 module.exports = modulesRouter;
