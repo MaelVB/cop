@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Modules = new Schema({
     name: { type: String },
-    structural_elements: [{ type: String }],
+    structural_elements: [String],
     configs: [String]
 });
 

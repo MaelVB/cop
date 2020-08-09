@@ -1,6 +1,6 @@
 let Modules = require('../schemas/modules.model');
 
-const getModules = async () => {
+const getModuleList = async () => {
     try {
         const getModules = await Modules.find({});
         return getModules;

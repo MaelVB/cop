@@ -12,9 +12,9 @@ const modulesController = require('../controllers/modules');
  */
 modulesRouter.route('/').get(async (req, res) => {
     try {
-        res.json(await modulesController.getModules());
+        res.json(await modulesController.getModuleList());
     } catch (err) {
-        next (err);
+        console.error(err);
     }
 });
 
@@ -25,7 +25,7 @@ modulesRouter.route('/:id').get(async (req, res) => {
     try {
         res.json(await modulesController.getModule(req));
     } catch (err) {
-        next(err);
+        console.error(err);
     }
 });
 
@@ -36,7 +36,7 @@ modulesRouter.route('/').post(async (req, res) => {
     try {
         res.json(await modulesController.createModule(req));
     } catch (err) {
-        next(err);
+        console.error(err);
     }
 });
 
@@ -47,7 +47,7 @@ modulesRouter.route('/:id').put(async (req, res) => {
     try {
         res.json(await modulesController.setModule(req));
     } catch (err) {
-        next(err);
+        console.error(err);
     }
 });
 
@@ -58,7 +58,7 @@ modulesRouter.route('/:id').delete(async (req, res) => {
     try {
         res.json(await modulesController.deleteModule(req));
     } catch (err) {
-        next(err);
+        console.error(err);
     }
 });
 
